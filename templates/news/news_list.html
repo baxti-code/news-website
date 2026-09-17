@@ -1,0 +1,52 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %}{{ category.name }}{% endblock title %}
+
+{% block content %}
+<section id="contentSection">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="left_content">
+                <div class="single_post_content">
+                    <h2><span>{{ category.name }}</span></h2>
+                    <ul class="spost_nav">
+                        {% for news in news_list %}
+                        <li>
+                            <div class="media wow fadeInDown">
+                                <a href="{{ news.get_absolute_url }}" class="media-left">
+                                    {% if news.image %}
+                                        <img alt="" src="{{ news.image.url }}">
+                                    {% endif %}
+                                </a>
+                                <div class="media-body">
+                                    <a href="{{ news.get_absolute_url }}" class="catg_title">{{ news.title }}</a>
+                                    <p>{{ news.body|truncatewords:20 }}</p>
+                                    <small>{{ news.published_time }}</small>
+                                </div>
+                            </div>
+                        </li>
+                        {% empty %}
+                            <p>Bu kategoriyada yangiliklar yo'q</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <aside class="right_content">
+                <div class="single_sidebar">
+                    <h2><span>Kategoriyalar</span></h2>
+                    <ul>
+                        {% for category in categories %}
+                        <li class="cat-item">
+                            <a href="{% url 'category_page' category.pk %}">{{ category.name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+{% endblock content %}
