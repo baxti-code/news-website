@@ -1,0 +1,35 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% block title %}Yangilik yaratish{% endblock %}
+
+{% block content %}
+<section id="contentSection">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="left_content">
+                <h2>Yangilik yaratish</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-theme">Saqlash</button>
+                    <a href="/" class="btn default-btn">Bekor qilish</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block javascript %}
+{{ block.super }}
+<script>
+    document.getElementById('id_title').addEventListener('input', function() {
+        let title = this.value;
+        let slug = title
+            .toLowerCase()
+            .replace(/ /g, '-')
+            .replace(/[^\w-]/g, '');
+        document.getElementById('id_slug').value = slug;
+    });
+</script>
+{% endblock javascript %}

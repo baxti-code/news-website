@@ -1,10 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from .models import News, Category
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, UpdateView, DeleteView, CreateView
 from .forms import ContactForm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http import HttpResponse
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
 # Create your views here.
 
 class HomePageView(ListView):
@@ -89,3 +92,25 @@ def News_List(request):
     context = {'news_list' : news_list}
 
     return render(request, 'news/news_list.html',context=context )
+
+@method_decorator(staff_member_required, name= 'dispatch')
+class NewsUpdateView(UpdateView):
+    model = News
+    fields = ('title', 'body', 'image', 'status', 'category')
+    template_name = 'crud/update_view.html'
+    success_url = reverse_lazy('home_page')
+
+@method_decorator(staff_member_required, name= 'dispatch')
+class NewsDeleteView(DeleteView):
+    model = News
+    template_name = 'crud/delete_view.html'
+    success_url = reverse_lazy('home_page')
+
+@method_decorator(staff_member_required, name= 'dispatch')
+class NewsCreateView(CreateView):
+    model = News
+    fields = ('title', 'slug', 'body', 'status', 'category', 'image')
+    template_name = 'crud/create_news.html'
+    success_url = reverse_lazy('home_page')
+    
+    

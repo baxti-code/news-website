@@ -1,0 +1,22 @@
+{% extends 'news/base.html' %}
+{% block title %}Yangilikni o'chirish{% endblock %}
+
+{% block content %}
+<section id="contentSection">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="left_content">
+                <h2>Rostdan ham o'chirmoqchimisiz?</h2>
+                <h4>{{ object.title }}</h4>
+                <img src="{{object.image.url }}" alt="" style="width:300px; margin-bottom:15px;">
+                <p>{{ object.body}}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-red">Ha, o'chirish</button>
+                    <a href="/" class="btn default-btn">Bekor qilish</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
