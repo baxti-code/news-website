@@ -20,18 +20,15 @@ class HomePageView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        all_news = News.published.select_related('category').order_by('-published_time')
         context['categories'] = Category.objects.all()
-        context['local_news'] = News.published.filter(
-            category__name="O'zbekiston"
-        ).order_by('-published_time')[1:5]
-        context['local_one'] = News.published.filter(
-            category__name="O'zbekiston"
-        ).order_by('-published_time')[:1]
-        context['jahon_news'] = News.published.filter(category__name = 'Jahon').order_by('-published_time')[1:5]
-        context['jahon_one'] = News.published.filter(category__name = 'Jahon').order_by('-published_time')[:1]
-        context['texnalogiya_news'] = News.published.filter(category__name = 'Texnalogiya').order_by('-published_time')[1:5]
-        context['texnalogiya_one'] = News.published.filter(category__name = 'Texnalogiya').order_by('-published_time')[:1]
-        context['sport_news'] = News.published.filter(category__name = 'Sport').order_by('-published_time')[:5]
+        context['local_news'] = all_news.filter(category__name="O'zbekiston")[1:5]
+        context['local_one'] = all_news.filter(category__name="O'zbekiston")[:1]
+        context['jahon_news'] = all_news.filter(category__name = 'Jahon')[1:5]
+        context['jahon_one'] = all_news.filter(category__name = 'Jahon')[:1]
+        context['texnalogiya_news'] = all_news.filter(category__name = 'Texnalogiya')[1:5]
+        context['texnalogiya_one'] = all_news.filter(category__name = 'Texnalogiya')[:1]
+        context['sport_news'] = all_news.filter(category__name = 'Sport')[:5]
 
         return context
 
@@ -40,7 +37,8 @@ class ContactPageView(TemplateView):
     def get(self, request, *args, **kwargs):
         form = ContactForm()
         context = {
-            'form': form
+            'form': form,
+            'categories':Category.objects.all()
         }
         return render(request, 'news/contact.html', context)
 
@@ -56,7 +54,8 @@ class ContactPageView(TemplateView):
             )
             return HttpResponse('<h2>Sizning xabaringiz muvaffaqiyatli yuborildi</h2>')
         context = {
-            'form':form
+            'form':form,
+            'categories':Category.objects.all()
         }
         return render(request, 'news/contact.html', context)
 

@@ -1,0 +1,22 @@
+{% extends 'news/base.html' %}
+{% block title %}Ro'yxatdan o'tish{% endblock %}
+
+{% block content %}
+<section id="contentSection">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3">
+            <div class="left_content">
+                <h2>Ro'yxatdan o'tish</h2>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-theme">Ro'yxatdan o'tish</button>
+                </form>
+                <p>Allaqachon akkauntingiz bormi? 
+                    <a href="{% url 'login' %}">Kirish</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

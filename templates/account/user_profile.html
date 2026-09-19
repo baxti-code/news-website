@@ -1,0 +1,30 @@
+{% extends 'news/base.html' %}
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<section id="contentSection">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3">
+            <div class="left_content">
+                <h2>Mening profilim</h2>
+                <hr>
+                <p><i class="fa fa-user"></i> <strong>Username:</strong> {{ user.username }}</p>
+                <p><i class="fa fa-envelope"></i> <strong>Email:</strong> {{ user.email }}</p>
+                <p><i class="fa fa-calendar"></i> <strong>Ro'yxatdan o'tgan:</strong> {{ user.date_joined|date:"d F Y" }}</p>
+                {% if user.is_staff %}
+                    <p><i class="fa fa-star"></i> <strong>Status:</strong> Admin</p>
+                {% else %}
+                    <p><i class="fa fa-star"></i> <strong>Status:</strong> Oddiy foydalanuvchi</p>
+                {% endif %}
+                <hr>
+                <a href="{% url 'logout' %}" class="btn btn-red">
+                    <i class="fa fa-sign-out"></i> Chiqish
+                </a>
+                <a href="{% url 'password_change' %}" class="btn btn-green">
+                    <i class="fa fancybox-buttons"></i> Parolni almashtirish
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

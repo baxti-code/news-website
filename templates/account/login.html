@@ -1,0 +1,21 @@
+{% extends 'news/base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<section id="contentSection">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3">
+            <div class="left_content">
+                <h2>Kirish</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-theme">Kirish</button><br>
+                    <button type="submit" class="btn btn-theme"><a href="{% url 'password_reset'%}">Parolni unutdingizmi?</a></button><br>
+                    <button type="submit" class="btn btn-theme"><a href="{% url 'user_register'%}">Akkauntingiz yo'qmi?</a></button>        
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

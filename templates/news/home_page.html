@@ -221,7 +221,7 @@
               <div role="tabpanel" class="tab-pane active" id="category">
                 <ul>
                   {%for category in categories%}
-                  <li class="cat-item"><a href="#">{{category.name}}</a></li>
+                  <li class="cat-item"><a href="{% url 'category_page' category.pk%}">{{category.name}}</a></li>
                   {% endfor %}
                 </ul>
               </div>
@@ -261,11 +261,11 @@
             <a class="sideAdd" href="#"><img src="{% static 'images/add_img.jpg' %}" alt=""></a> </div>
           <div class="single_sidebar wow fadeInDown">
             <h2><span>Kategoriyalar jadvali</span></h2>
-            <select class="catgArchive">
-              <option>Kategoriyani tanlang</option>
-              {% for category in categories%}
-              <option>{{category.name}}</option>
-              {% endfor %}
+            <select class="catgArchive" onchange="window.location=this.value">
+                <option value="">Kategoriyani tanlang</option>
+                {% for category in categories %}
+                <option value="{% url 'category_page' category.pk %}">{{ category.name }}</option>
+                {% endfor %}
             </select>
           </div>
           <div class="single_sidebar wow fadeInDown">
