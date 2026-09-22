@@ -1,4 +1,5 @@
 {% extends 'news/base.html' %}
+{% load static%}
 {% block title %}Profil{% endblock %}
 
 {% block content %}
@@ -8,9 +9,32 @@
             <div class="left_content">
                 <h2>Mening profilim</h2>
                 <hr>
+
+                <!-- Avatar -->
+                {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" 
+                         alt="avatar" 
+                         style="width:100px; height:100px; border-radius:50%; margin-bottom:15px;">
+                {% else %}
+                    <img src="{% static 'images/default_avatar.png' %}" 
+                         alt="avatar"
+                         style="width:100px; height:100px; border-radius:50%; margin-bottom:15px;">
+                {% endif %}
+
                 <p><i class="fa fa-user"></i> <strong>Username:</strong> {{ user.username }}</p>
                 <p><i class="fa fa-envelope"></i> <strong>Email:</strong> {{ user.email }}</p>
                 <p><i class="fa fa-calendar"></i> <strong>Ro'yxatdan o'tgan:</strong> {{ user.date_joined|date:"d F Y" }}</p>
+
+                <!-- Birth date -->
+                {% if user.profile.birth_date %}
+                    <p><i class="fa fa-birthday-cake"></i> <strong>Tug'ilgan kun:</strong> {{ user.profile.birth_date|date:"d F Y" }}</p>
+                {% endif %}
+
+                <!-- Bio -->
+                {% if user.profile.bio %}
+                    <p><i class="fa fa-info-circle"></i> <strong>Bio:</strong> {{ user.profile.bio }}</p>
+                {% endif %}
+
                 {% if user.is_staff %}
                     <p><i class="fa fa-star"></i> <strong>Status:</strong> Admin</p>
                 {% else %}
@@ -21,7 +45,10 @@
                     <i class="fa fa-sign-out"></i> Chiqish
                 </a>
                 <a href="{% url 'password_change' %}" class="btn btn-green">
-                    <i class="fa fancybox-buttons"></i> Parolni almashtirish
+                    Parolni almashtirish
+                </a>
+                <a href="{% url 'profile_edit' %}" class="btn btn-theme">
+                    <i class="fa fa-edit"></i> Profilni tahrirlash
                 </a>
             </div>
         </div>

@@ -1,0 +1,28 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% block title %}Profilni tahrirlash{% endblock %}
+
+{% block content %}
+<section id="contentSection">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3">
+            <div class="left_content">
+                <h2>Profilni tahrirlash</h2>
+                <hr>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <h4>Shaxsiy ma'lumotlar</h4>
+                    {{ user_form.as_p }}
+                    
+                    <h4>Profil ma'lumotlar</h4>
+                    {{ profile_form.as_p }}
+                    
+                    <button type="submit" class="btn btn-theme">Saqlash</button>
+                    <a href="{% url 'profile' %}" class="btn default-btn">Bekor qilish</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
