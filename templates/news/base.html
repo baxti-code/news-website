@@ -31,6 +31,17 @@
               <li><a href="{% url 'home_page'%}">Home</a></li>
               <li><a href="#">About</a></li>
               <li><a href="{% url 'contact_page'%}">Contact</a></li>
+              <li>
+              <form method="GET" action="{% url 'search' %}">
+                  <input type="text" name="q" 
+                    placeholder="Qidirish..." 
+                    style="padding:6px 12px; border:1px solid #ddd; border-radius:3px 0 0 3px;">
+                  <button type="submit" 
+                      style="padding:6px 10px; background:#e74c3c; color:white; border:none; border-radius:0 3px 3px 0;">
+                      <i class="fa fa-search"></i>
+                  </button>
+              </form>
+              </li>
             </ul>
           </div>
           <div class="header_top_right">

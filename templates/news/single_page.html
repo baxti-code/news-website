@@ -17,6 +17,12 @@
               <span><i class="fa fa-calendar"></i> {{ news_detail.published_time }}</span>
               <a href="#"><i class="fa fa-tags"></i> {{ news_detail.category }}</a>
             </div>
+            <div class="news-meta">
+                <span>
+                  <i class="fa fa-eye"></i>
+                  {{ news_detail.hit_count }}
+                </span>
+            </div>
             <div class="single_page_content">
               {% if news_detail.image %}
                 <img class="img-center" src="{{ news_detail.image.url }}" alt="">
@@ -29,6 +35,37 @@
                 <a href="{% url 'delete_view' news_detail.slug %}" class="btn btn-red">Delete</a>
             </div>
             {% endif %}
+            <!-- IZOH QO'SHISH FORMASI -->
+            <div class="comments-section style="margin-top: 30px;">
+                <h3>Izohlar ({{ comments.count }})</h3>
+
+                {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+                <div class="form-group">
+                    {{ comment_form.body }}
+                </div>
+                <button type="submit" class="btn btn-primary my-2">Yuborish</button>
+                </form>
+                {% else %}
+                   <p>Izoh qoldirish uchun <a href="{% url 'login' %}" style="color: brown;">tizimga kiring</a>.</p>
+                {% endif %}
+
+                <hr>
+
+                <!-- IZOHLAR RO'YXATI -->
+                <div class="comments-list">
+                    {% for comment in comments %}
+                    <div class="comment-item mb-3 p-3 style="border: 1px solid #ddd; border-radius: 5px;">
+                        <strong>{{ comment.user.username }}</strong> 
+                        <small class="text-muted">{{ comment.created_time|date:"d.m.Y H:i" }}</small>
+                        <p class="mt-2 mb-0">{{ comment.body }}</p>
+                </div>
+                {% empty %}
+                    <p>Hali hech kim izoh qoldirmagan. Birinchi bo'lib izoh yozing!</p>
+                {% endfor %}
+             </div>
+            </div>
             <div class="social_link">
               <ul class="sociallink_nav">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -71,26 +108,18 @@
           <div class="single_sidebar">
             <h2><span>Popular Post</span></h2>
             <ul class="spost_nav">
+              {% for post in most_viewed_news %}
               <li>
                 <div class="media wow fadeInDown">
                   <a href="#" class="media-left">
-                    <img alt="" src="{% static 'images/post_img1.jpg'%}">
+                    <img alt="" src="{{ post.image.url }}">
                   </a>
                   <div class="media-body">
-                    <a href="#" class="catg_title">Aliquam malesuada diam eget turpis varius 1</a>
+                    <a href="{{ post.get_absolute_url }}" class="catg_title">{{ post.title }}</a>
                   </div>
                 </div>
               </li>
-              <li>
-                <div class="media wow fadeInDown">
-                  <a href="#" class="media-left">
-                    <img alt="" src="{% static 'images/post_img2.jpg'%}">
-                  </a>
-                  <div class="media-body">
-                    <a href="#" class="catg_title">Aliquam malesuada diam eget turpis varius 2</a>
-                  </div>
-                </div>
-              </li>
+              {% endfor %}
             </ul>
           </div>
           <div class="single_sidebar">

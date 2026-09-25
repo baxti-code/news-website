@@ -1,0 +1,35 @@
+{% extends 'news/base.html' %}
+{% block title %}Qidiruv: {{ query }}{% endblock %}
+
+{% block content %}
+<section id="contentSection">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="left_content">
+                <h2>"{{ query }}" bo'yicha natijalar</h2>
+                <p>{{ results.count }} ta natija topildi</p>
+                <hr>
+                {% for news in results %}
+                <div class="media wow fadeInDown" style="margin-bottom:20px;">
+                    <a href="{{ news.get_absolute_url }}" class="media-left">
+                        {% if news.image %}
+                            <img alt="" src="{{ news.image.url }}" style="width:80px;">
+                        {% endif %}
+                    </a>
+                    <div class="media-body">
+                        <a href="{{ news.get_absolute_url }}" class="catg_title">
+                            <h4>{{ news.title }}</h4>
+                        </a>
+                        <p>{{ news.body|truncatewords:20 }}</p>
+                        <small>{{ news.published_time|date:"d F Y" }}</small>
+                    </div>
+                </div>
+                <hr>
+                {% empty %}
+                    <p>Hech narsa topilmadi 😔</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

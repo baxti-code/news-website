@@ -25,8 +25,12 @@
               {%for news in news_list%}
               <li>
                 <div class="media"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{news.image.url}}"> </a>
-                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title">{{news.title}}</a> </div>
-                </div>
+                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title">{{news.title}}</a> 
+                    <p class="news-meta">
+                     <i class="fa fa-eye"></i>
+                     {{ news.hit_count }}
+                    </p></div>
+                  </div>
               </li>
               {% endfor %}
             </ul>
@@ -161,7 +165,7 @@
                 <li>
                   <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{{ sport.get_absolute_url }}"> <img src="{{ sport.image.url}}" alt=""> <span class="overlay"></span> </a>
                     <figcaption> <a href="{{ sport.get_absolute_url }}">{{sport.title | truncatewords:5}}</a> </figcaption>
-                    <p>{{sport.title}}</p>
+                    <p>{{sport.title}}</p><p class="news-meta"><i class="fa fa-eye"></i>{{ sport.hit_count }}</p>
                   </figure>
                 </li>
                 {% endif %}
@@ -174,7 +178,8 @@
                 {% if forloop.counter > 1 %}
                 <li>
                   <div class="media wow fadeInDown"> <a href="{{ sport.get_absolute_url }}" class="media-left"> <img alt="" src="{{ sport.image.url }}"> </a>
-                    <div class="media-body"> <a href="{{ sport.get_absolute_url }}" class="catg_title">{{sport.title}}</a> </div>
+                    <div class="media-body"> <a href="{{ sport.get_absolute_url }}" class="catg_title">{{sport.title}}</a> 
+                      <p class="news-meta"><i class="fa fa-eye"></i>{{ sport.hit_count }}</p></div>
                   </div>
                 </li>
                 {% endif %}
@@ -189,26 +194,17 @@
           <div class="single_sidebar">
             <h2><span>Ommabop</span></h2>
             <ul class="spost_nav">
+              {% for news in most_viewed_news %}
               <li>
-                <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{% static 'images/post_img1.jpg' %}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
+                <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
+                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{ news.title }}</a> </div>
+                  <p class="news-meta">
+                     <i class="fa fa-eye"></i>
+                     {{ news.hit_count }}
+                  </p>
                 </div>
               </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{% static 'images/post_img2.jpg' %}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{% static 'images/post_img1.jpg' %}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{% static 'images/post_img2.jpg' %}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
-                </div>
-              </li>
+              {% endfor %}
             </ul>
           </div>
           <div class="single_sidebar">
