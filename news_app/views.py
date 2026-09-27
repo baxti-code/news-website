@@ -22,13 +22,13 @@ class HomePageView(ListView):
         context = super().get_context_data(**kwargs)
         all_news = News.published.select_related('category').order_by('-published_time')
         context['categories'] = Category.objects.all()
-        context['local_news'] = all_news.filter(category__name="O'zbekiston")[1:5]
-        context['local_one'] = all_news.filter(category__name="O'zbekiston")[:1]
-        context['jahon_news'] = all_news.filter(category__name = 'Jahon')[1:5]
-        context['jahon_one'] = all_news.filter(category__name = 'Jahon')[:1]
-        context['texnalogiya_news'] = all_news.filter(category__name = 'Texnalogiya')[1:5]
-        context['texnalogiya_one'] = all_news.filter(category__name = 'Texnalogiya')[:1]
-        context['sport_news'] = all_news.filter(category__name = 'Sport')[:5]
+        context['local_news'] = all_news.filter(category__name_uz="O'zbekiston")[1:5]
+        context['local_one'] = all_news.filter(category__name_uz="O'zbekiston")[:1]
+        context['jahon_news'] = all_news.filter(category__name_uz = 'Jahon')[1:5]
+        context['jahon_one'] = all_news.filter(category__name_uz = 'Jahon')[:1]
+        context['texnalogiya_news'] = all_news.filter(category__name_uz = 'Texnalogiya')[1:5]
+        context['texnalogiya_one'] = all_news.filter(category__name_uz = 'Texnalogiya')[:1]
+        context['sport_news'] = all_news.filter(category__name_uz = 'Sport')[:5]
         context['most_viewed_news'] = News.published.order_by('-hit_count')[:5]
         return context
 

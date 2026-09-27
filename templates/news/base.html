@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,13 +29,13 @@
         <div class="header_top">
           <div class="header_top_left">
             <ul class="top_nav">
-              <li><a href="{% url 'home_page'%}">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="{% url 'contact_page'%}">Contact</a></li>
+              <li><a href="{% url 'home_page'%}">{% trans "Bosh sahifa" %}</a></li>
+              <li><a href="#">{% trans "Haqimizda" %}</a></li>
+              <li><a href="{% url 'contact_page'%}">{% trans "Bog'lanish" %}</a></li>
               <li>
               <form method="GET" action="{% url 'search' %}">
                   <input type="text" name="q" 
-                    placeholder="Qidirish..." 
+                    placeholder="{% trans 'Qidirish...' %}" 
                     style="padding:6px 12px; border:1px solid #ddd; border-radius:3px 0 0 3px;">
                   <button type="submit" 
                       style="padding:6px 10px; background:#e74c3c; color:white; border:none; border-radius:0 3px 3px 0;">
@@ -46,6 +47,16 @@
           </div>
           <div class="header_top_right">
             <p>{% now "jS F Y H:i" %}</p>
+            <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="/">
+                <select name="language" onchange="this.form.submit()" 
+                        style="border:none; background:transparent; color:white; cursor:pointer;">
+                    <option value="uz" {% if request.LANGUAGE_CODE == 'uz' %}selected{% endif %}>🇺🇿 UZ</option>
+                    <option value="ru" {% if request.LANGUAGE_CODE == 'ru' %}selected{% endif %}>🇷🇺 RU</option>
+                    <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>🇬🇧 EN</option>
+                </select>
+            </form>
           </div>
         </div>
       </div>
@@ -60,21 +71,26 @@
   <section id="navArea">
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">{% trans "Navigatsiya" %}</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav main_nav">
-          <li class="active"><a href="{%url 'home_page'%}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
+          <li class="active"><a href="{% url 'home_page' %}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">{% trans "Bosh sahifa" %}</span></a></li>
           {% for category in categories %}
-          <li><a href="{% url 'category_page' category.pk%}">{{category.name}}</a></li>
+          <li><a href="{% url 'category_page' category.pk %}">{{ category.name }}</a></li>
           {% endfor %}
-          <li><a href="{% url 'contact_page'%}">Contact Us</a></li>
-          <li><a href="{% url '404_page'%}">404 Page</a></li>
-          {%if request.user.is_staff %}
-          <li><a href="{% url 'create_news'%}">Yangilik qo'shish</a></li>
+          <li><a href="{% url 'contact_page' %}">{% trans "Bog'lanish" %}</a></li>
+          <li><a href="{% url '404_page' %}">404</a></li>
+          {% if request.user.is_staff %}
+          <li><a href="{% url 'create_news' %}">{% trans "Yangilik qo'shish" %}</a></li>
           {% endif %}
-          {%if request.user.is_staff %}
-          <li><a href="{% url 'admin_panel'%}">Admin panel</a></li>
+          {% if request.user.is_staff %}
+          <li><a href="{% url 'admin_panel' %}">{% trans "Admin panel" %}</a></li>
           {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -84,7 +100,7 @@
             </a></li>
             {% else %}
             <li><a href="{% url 'login' %}">
-              <i class="fa fa-sign-in"></i> Kirish
+              <i class="fa fa-sign-in"></i> {% trans "Kirish" %}
             </a></li>
             {% endif %}
         </ul>
@@ -94,10 +110,11 @@
   <section id="newsSection">
     <div class="row">
       <div class="col-lg-12 col-md-12">
-        <div class="latest_newsarea"> <span>Latest News</span>
+        <div class="latest_newsarea">
+          <span>{% trans "So'nggi yangiliklar" %}</span>
           <ul id="ticker01" class="news_sticker">
-            {%for news in latest_news%}
-            <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url}}" alt="">{{news.title}}</a></li>
+            {% for news in latest_news %}
+            <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url }}" alt="">{{ news.title }}</a></li>
             {% endfor %}
           </ul>
           <div class="social_area">
@@ -117,45 +134,46 @@
     </div>
   </section>
 
-{% block content%}
-{% endblock content%}
+{% block content %}
+{% endblock content %}
 
 <footer id="footer">
     <div class="footer_top">
       <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4">
           <div class="footer_widget wow fadeInLeftBig">
-            <h2>Flickr Images</h2>
+            <h2>{% trans "Rasmlar" %}</h2>
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
           <div class="footer_widget wow fadeInDown">
-            <h2>Tag</h2>
+            <h2>{% trans "Kategoriyalar" %}</h2>
             <ul class="tag_nav">
-            {% for category in categories%}
-              <li><a href="{% url 'category_page' category.pk %}">{{category.name}}</a></li>
+            {% for category in categories %}
+              <li><a href="{% url 'category_page' category.pk %}">{{ category.name }}</a></li>
             {% endfor %}
             </ul>
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
           <div class="footer_widget wow fadeInRightBig">
-            <h2>Contact</h2>
-            <p>Bog'lanish uchun telefon:</p>
+            <h2>{% trans "Bog'lanish" %}</h2>
+            <p>{% trans "Bog'lanish uchun telefon:" %}</p>
             <address>
-            Manzil: 24, Kalandar, Mirzo Ulug'bek, Toshkent, Uzb, Phone: +998958412715
+            {% trans "Manzil" %}: 24, Kalandar, Mirzo Ulug'bek, Toshkent, Uzb, 
+            {% trans "Telefon" %}: +998958412715
             </address>
           </div>
         </div>
       </div>
     </div>
     <div class="footer_bottom">
-      <p class="copyright">Copyright &copy; 2045 <a href="index.html">NewsFeed</a></p>
-      <p class="developer">Developed By Wpfreeware</p>
+      <p class="copyright">Copyright &copy; 2026 <a href="/">NewsFeed</a></p>
+      <p class="developer">Developed By Baxtiyor</p>
     </div>
   </footer>
 </div>
-{%block javascript%}
+{% block javascript %}
 <script src="{% static 'js/jquery.min.js'%}"></script> 
 <script src="{% static 'js/wow.min.js'%}"></script> 
 <script src="{% static 'js/bootstrap.min.js'%}"></script> 
@@ -164,6 +182,6 @@
 <script src="{% static 'js/jquery.newsTicker.min.js'%}"></script> 
 <script src="{% static 'js/jquery.fancybox.pack.js'%}"></script> 
 <script src="{% static 'js/custom.js'%}"></script>
-{%endblock javascript%}
+{% endblock javascript %}
 </body>
 </html>

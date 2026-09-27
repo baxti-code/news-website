@@ -1,21 +1,23 @@
-# Virtual environment
+# Python / Virtual Environment
 venv/
-
-# Python cache
-*.pyc
+.venv/
+env/
 __pycache__/
+*.py[cod]
+*$py.class
 
-# Database
-db.sqlite3
-
-# Media fayllar (rasmlar)
-media/
-
-# Environment variables
+# Environment variables (Maxfiy kalitlar)
 .env
 
-# VS Code
-.vscode/
+# Database (Lokal ma'lumotlar bazasi)
+db.sqlite3
 
-# Mac
+# Static & Media (Lokal fayllar)
+staticfiles/
+media/
+
+# IDE va OS fayllari
+.vscode/
+.idea/
 .DS_Store
+*.swp
